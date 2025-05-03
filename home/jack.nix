@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.username = "jack";
@@ -20,6 +20,49 @@
     configFile."oh-my-posh/config.toml".source = ./oh-my-posh.toml;
   };
 
+  programs.nvf = {
+    enable = true;
+    settings.vim = {
+      viAlias = true;
+      vimAlias = true;
+      
+      lineNumberMode = "relNumber";
+      searchCase = "smart";
+      hideSearchHighlight = true;
+
+      statusline.lualine.enable = true;
+      statusline.lualine.refresh.statusline = 100;
+
+      autocomplete.blink-cmp.enable = true;
+
+      options = {
+        mouse = "a";
+        shiftwidth = 0;
+        tabstop = 4;
+        cmdheight = 0;
+      };
+
+      telescope = {
+        enable = true;
+      };
+
+      utility.motion.flash-nvim.enable = true;
+      utility.surround.enable = true;
+      autopairs.nvim-autopairs.enable = true;
+
+      languages = {
+        enableLSP = true;
+        enableFormat = true;
+        enableTreesitter = true;
+
+        nix.enable = true;
+        rust.enable = true;
+      };
+
+      visuals.cinnamon-nvim.enable = true;
+
+    };
+  };
 
   programs.jujutsu = {
     enable = true;
@@ -62,7 +105,6 @@
     shellAliases = {
       awsl = "aws sso login";
       drs = "darwin-rebuild switch --flake ~/.config/nix";
-      vim = "nvim";
       cat = "bat";
       catt = "bat --style=plain --paging=never";
       ls = "eza -l --icons=auto";

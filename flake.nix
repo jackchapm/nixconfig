@@ -8,11 +8,14 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
+
     gigamonster.url = "github:gigamonster256/nur-packages";
     gigamonster.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, gigamonster, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, gigamonster, nvf, ... }:
   let
     gigamonsterOverlay = final: prev: {
       nur = (prev.nur or {}) // {
@@ -70,6 +73,10 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.jack = ./home/jack.nix;
+
+          home-manager.sharedModules = [
+            nvf.homeManagerModules.default
+          ];
         }
       ];
     };
