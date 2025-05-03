@@ -22,13 +22,18 @@
         email = "chapmanjack0777@gmail.com";
         name = "Jack Chapman";
       };
-      ui.editor = "nvim";
-      ui.paginate = "never";
-      signing = {
-        behaviour = "own";
-        backend = "ssh";
-        key = "/Users/jack/.ssh/id_ed25519.pub";
+      ui = {
+        editor = "nvim";
+        paginate = "never";
+        show-cryptographic-signatures = true;
       };
+      signing = {
+        behavior = "drop";
+        backend = "ssh";
+        key = "~/.ssh/id_ed25519.pub";
+      };
+      git.sign-on-push = true;
+      backends.ssh.allowed-signers = "~/.ssh/allowed_signers";
     };
   };
 
@@ -37,7 +42,7 @@
     userName = "Jack Chapman";
     userEmail = "chapmanjack0777@gmail.com";
     signing.format = "ssh";
-    signing.key = "/Users/jack/.ssh/id_ed25519.pub";
+    signing.key = "~/.ssh/id_ed25519.pub";
     signing.signByDefault = true;
   };
 
