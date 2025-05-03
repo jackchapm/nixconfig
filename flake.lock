@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "gigamonster": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742914876,
+        "narHash": "sha256-f/TMIXH7nJgdLiblKKOQbD4iR3G3UEXkBoBtwj7s4aI=",
+        "owner": "gigamonster256",
+        "repo": "nur-packages",
+        "rev": "08c57b37be61053656b0db193ee1fe92e65ddb03",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gigamonster256",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -59,6 +79,7 @@
     },
     "root": {
       "inputs": {
+        "gigamonster": "gigamonster",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs"

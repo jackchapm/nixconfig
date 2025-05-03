@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.username = "jack";
@@ -9,10 +9,16 @@
     eza
     bat
     fzf
+    oh-my-posh
   ];
 
   home.stateVersion = "24.11";
   programs.home-manager.enable = true;
+
+  xdg = {
+    enable = true;
+    configFile."oh-my-posh/config.toml".source = ./oh-my-posh.toml;
+  };
 
 
   programs.jujutsu = {
@@ -44,6 +50,10 @@
     signing.format = "ssh";
     signing.key = "~/.ssh/id_ed25519.pub";
     signing.signByDefault = true;
+    extraConfig = {
+      core.autocrlf = false;
+      pull.rebase = true;
+    };
   };
 
   programs.zsh = {
@@ -61,7 +71,12 @@
     };
 
     # Order 1000 - general
-    initContent = "zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'";
+    initExtra = "zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'";
+
+    initContent = 
+    lib.mkOrder 1500 ''
+      eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/config.toml)"
+    '';
 
     envExtra = ''
       . "$HOME/.cargo/env"
@@ -69,10 +84,11 @@
     '';
   };
 
-  programs.starship = {
+  programs.ghostty = {
     enable = true;
+    package = if pkgs.stdenv.isDarwin then pkgs.nur.gigamonster.ghostty-darwin else pkgs.ghostty;
     settings = {
-      
+      macos-titlebar-style = "hidden";
     };
   };
 }
