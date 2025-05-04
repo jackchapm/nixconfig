@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   home.username = "jack";
   home.homeDirectory = /Users/jack;
 
@@ -25,7 +27,7 @@
     settings.vim = {
       viAlias = true;
       vimAlias = true;
-      
+
       lineNumberMode = "relNumber";
       searchCase = "smart";
       hideSearchHighlight = true;
@@ -58,9 +60,6 @@
         nix.enable = true;
         rust.enable = true;
       };
-
-      visuals.cinnamon-nvim.enable = true;
-
     };
   };
 
@@ -80,9 +79,9 @@
         behavior = "drop";
         backend = "ssh";
         key = "~/.ssh/id_ed25519.pub";
+        backends.ssh.allowed-signers = "~/.ssh/allowed_signers";
       };
       git.sign-on-push = true;
-      backends.ssh.allowed-signers = "~/.ssh/allowed_signers";
     };
   };
 
@@ -112,13 +111,11 @@
       jjl = "jj log";
     };
 
-    # Order 1000 - general
-    initExtra = "zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'";
-
-    initContent = 
-    lib.mkOrder 1500 ''
-      eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/config.toml)"
-    '';
+    initContent = let
+      zshConfigLate = lib.mkOrder 1500 ''eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/oh-my-posh/config.toml)" '';
+      zshConfig = lib.mkOrder 1000 ''zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' '';
+    in
+      lib.mkMerge [zshConfig zshConfigLate];
 
     envExtra = ''
       . "$HOME/.cargo/env"
@@ -128,9 +125,13 @@
 
   programs.ghostty = {
     enable = true;
-    package = if pkgs.stdenv.isDarwin then pkgs.nur.gigamonster.ghostty-darwin else pkgs.ghostty;
+    package =
+      if pkgs.stdenv.isDarwin
+      then pkgs.nur.gigamonster.ghostty-darwin
+      else pkgs.ghostty;
     settings = {
       macos-titlebar-style = "hidden";
+      background-opacity = 0.95;
     };
   };
 }
