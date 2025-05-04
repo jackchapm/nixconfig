@@ -6,12 +6,18 @@
   home.username = "jack";
   home.homeDirectory = /Users/jack;
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    LANG = "en_GB.UTF-8";
+  };
+
   home.packages = with pkgs; [
     cargo-lambda
     eza
     bat
     fzf
     oh-my-posh
+    sketchybar
   ];
 
   home.stateVersion = "24.11";
@@ -28,12 +34,14 @@
       viAlias = true;
       vimAlias = true;
 
+      useSystemClipboard = true;
       lineNumberMode = "relNumber";
       searchCase = "smart";
       hideSearchHighlight = true;
 
       statusline.lualine.enable = true;
       statusline.lualine.refresh.statusline = 100;
+      visuals.fidget-nvim.enable = true;
 
       autocomplete.blink-cmp.enable = true;
 
@@ -61,6 +69,15 @@
         rust.enable = true;
       };
     };
+  };
+
+  programs.aerospace = {
+    enable = true;
+    userSettings = builtins.fromTOML (builtins.readFile ./aerospace.toml);
+  };
+
+  services.jankyborders = {
+    enable = true;
   };
 
   programs.jujutsu = {
@@ -109,6 +126,7 @@
       ls = "eza -l --icons=auto";
       jjst = "jj st";
       jjl = "jj log";
+      jjbmh = "jj bookmark move --to @";
     };
 
     initContent = let
@@ -119,7 +137,6 @@
 
     envExtra = ''
       . "$HOME/.cargo/env"
-      export LANG=en_GB.UTF-8
     '';
   };
 
@@ -130,8 +147,42 @@
       then pkgs.nur.gigamonster.ghostty-darwin
       else pkgs.ghostty;
     settings = {
+      theme = "catppuccin-mocha";
+      font-family = "FiraCode Nerd Font Mono";
+      font-size = 18;
       macos-titlebar-style = "hidden";
       background-opacity = 0.95;
+      window-padding-x = "4, 2";
+      window-padding-y = "4, 2";
+    };
+
+    themes = {
+      catppuccin-mocha = {
+        palette = [
+          "0=#45475a"
+          "1=#f38ba8"
+          "2=#a6e3a1"
+          "3=#f9e2af"
+          "4=#89b4fa"
+          "5=#f5c2e7"
+          "6=#94e2d5"
+          "7=#bac2de"
+          "8=#585b70"
+          "9=#f38ba8"
+          "10=#a6e3a1"
+          "11=#f9e2af"
+          "12=#89b4fa"
+          "13=#f5c2e7"
+          "14=#94e2d5"
+          "15=#a6adc8"
+        ];
+        background = "1e1e2e";
+        foreground = "cdd6f4";
+        cursor-color = "f5e0dc";
+        cursor-text = "1e1e2e";
+        selection-background = "353749";
+        selection-foreground = "cdd6f4";
+      };
     };
   };
 }
