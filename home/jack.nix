@@ -140,6 +140,11 @@
     '';
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  }
+
   programs.ghostty = {
     enable = true;
     package =
