@@ -91,6 +91,7 @@
         editor = "nvim";
         paginate = "never";
         show-cryptographic-signatures = true;
+        default-command = "log";
       };
       signing = {
         behavior = "drop";
@@ -125,7 +126,6 @@
       catt = "bat --style=plain --paging=never";
       ls = "eza -l --icons=auto";
       jjst = "jj st";
-      jjl = "jj log";
       jjbmh = "jj bookmark move --to @";
     };
 
@@ -143,7 +143,7 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-  }
+  };
 
   programs.ghostty = {
     enable = true;
