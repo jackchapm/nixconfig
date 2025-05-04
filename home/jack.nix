@@ -163,6 +163,10 @@
       background-opacity = 0.95;
       window-padding-x = "4, 2";
       window-padding-y = "4, 2";
+
+      keybind = [
+        "super+enter=unbind"
+      ];
     };
 
     themes = {
