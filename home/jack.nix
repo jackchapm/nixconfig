@@ -26,6 +26,10 @@
   xdg = {
     enable = true;
     configFile."oh-my-posh/config.toml".source = ./oh-my-posh.toml;
+    configFile."sketchybar" = {
+      source = ./sketchybar;
+      recursive = true;
+    };
   };
 
   programs.nvf = {
